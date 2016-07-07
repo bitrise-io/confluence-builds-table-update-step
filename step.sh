@@ -2,8 +2,6 @@
 
 # fail if any commands fails
 set -e
-# debug log
-set -x
 
 THIS_SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
