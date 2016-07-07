@@ -1,0 +1,59 @@
+title: "Update confluence builds table"
+summary: "Update confluence builds table"
+description: "Update confluence builds table"
+website: https://github.com/dagio/confluence-builds-table-update-step
+source_code_url: https://github.com/dagio/confluence-builds-table-update-step.git
+support_url: https://github.com/dagio/confluence-builds-table-update-step/issues
+type_tags:
+  - deploy
+is_requires_admin_user: false
+is_always_run: false
+is_skippable: true
+host_os_tags:
+- ubuntu-14.04
+- osx-10.11
+deps:
+  apt_get:
+  - name: php7.0
+run_if: .IsCI | and (not .IsPR)
+inputs:
+  - cells:
+    opts:
+      title: "Cells values"
+      summary: "Values (1 line = 1 column)"
+      description: ""
+      is_expand: true
+      is_required: true
+  - jira_user:
+    opts:
+      title: "JIRA user"
+      summary: "JIRA account username that will be the author of the comment"
+      description: "JIRA account username that will be the author of the comment"
+      is_expand: true
+      is_required: true
+      value_options: []
+  - jira_password:
+    opts:
+      title: "JIRA user password"
+      summary: "JIRA account password that will be the author of the comment"
+      description: "JIRA account password that will be the author of the comment"
+      is_expand: true
+      is_required: true
+      value_options: []
+  - jira_url:
+    opts:
+      title: "JIRA URL"
+      summary: "JIRA instance URL"
+      description: "JIRA instance URL (Ex: http://foobar.atlassian.net/)"
+      is_expand: true
+      is_required: true
+      value_options: []
+  - page_id:
+    opts:
+      title: "Page id"
+      summary: "Confluence page id"
+      description: "Confluence page id"
+      is_expand: true
+      is_required: true
+      value_options: []
+outputs:

@@ -1,0 +1,4 @@
+.bitrise.secrets.yml
+vendor/
+composer.phar
+composer-setup.php
