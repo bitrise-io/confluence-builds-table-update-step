@@ -41,6 +41,9 @@ final class TableUpdateCommand extends Command
         $html = str_replace("\n", "", $html);
         $html = str_replace("<col>", "<col/>", $html);
 
+        $output->writeln("HTML content generated:");
+        $output->writeln($html);
+
         $newPage = [
             'title' => $page['title'],
             'type' => $page['type'],
