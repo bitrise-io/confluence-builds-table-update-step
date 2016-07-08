@@ -12,7 +12,7 @@ final class HTMLTableBuilder
     public function build($fromCode, array $cellsValues)
     {
         $DOMDocument = new \DOMDocument('1.0', 'utf8');
-        $DOMDocument->loadHTML($fromCode);
+        $DOMDocument->loadHTML(mb_convert_encoding($fromCode, 'HTML-ENTITIES', "UTF-8"));
 
         $DOMXpath = new \DOMXPath($DOMDocument);
         $tableBodyNodes = $DOMXpath->query('//table//tbody');
