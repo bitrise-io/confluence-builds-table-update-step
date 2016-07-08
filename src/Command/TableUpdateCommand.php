@@ -38,6 +38,8 @@ final class TableUpdateCommand extends Command
 
         $builder = new HTMLTableBuilder();
         $html = $builder->build($page['body']['view']['value'], $cells);
+        $html = str_replace("\n", "", $html);
+        $html = str_replace("<col>", "<col/>", $html);
 
         $output->writeln("HTML content generated:");
         $output->writeln($html);
