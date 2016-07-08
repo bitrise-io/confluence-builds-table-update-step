@@ -9,10 +9,12 @@ final class HTMLTableBuilder
     /**
      * @param string $fromCode HTML code that contains the table
      */
-    public function build($fromCode, array $cellsValues)
+    public function build($fromCode, $codeToAdd)
     {
-        $DOMDocument = new \DOMDocument('1.0', 'utf8');
-        $DOMDocument->loadHTML(mb_convert_encoding($fromCode, 'HTML-ENTITIES', "UTF-8"));
+        $DOMDocument = new \DOMDocument('1.0', 'utf-8');
+        $DOMDocument->formatOutput = false;
+        $DOMDocument->preserveWhiteSpace = false;
+        $DOMDocument->loadHTML($fromCode);
 
         $DOMXpath = new \DOMXPath($DOMDocument);
         $tableBodyNodes = $DOMXpath->query('//table//tbody');
@@ -23,28 +25,13 @@ final class HTMLTableBuilder
 
         $tableBodyNode = $tableBodyNodes->item(0);
 
-        $this->addCellsToTableBody($DOMDocument, $tableBodyNode, $cellsValues);
+        $fragment = $DOMDocument->createDocumentFragment();
+        $fragment->appendXML($codeToAdd);
+        $tableBodyNode->appendChild($fragment);
 
         $html = $this->getHtmlWithoutDocType($DOMDocument);
 
         return $html;
-    }
-
-    /**
-     * @param \DOMDocument $DOMDocument
-     * @param array        $cellsValues
-     */
-    private function addCellsToTableBody(\DOMDocument $DOMDocument, \DOMNode $tableBodyNode, array $cellsValues)
-    {
-        $tableRow = $DOMDocument->createElement('tr', '');
-
-        foreach ($cellsValues as $cellValue) {
-            $tableCell = $DOMDocument->createElement('td', $cellValue);
-            $tableCell->setAttribute('class', 'confluenceTd');
-            $tableRow->appendChild($tableCell);
-        }
-
-        $tableBodyNode->appendChild($tableRow);
     }
 
     /**
@@ -57,7 +44,7 @@ final class HTMLTableBuilder
         $html = '';
         $bodyTag = $DOMDocument->documentElement->getElementsByTagName('body')->item(0);
         foreach ($bodyTag->childNodes as $rootLevelTag) {
-            $html .= $DOMDocument->saveHTML($rootLevelTag);
+            $html .= $DOMDocument->saveXML($rootLevelTag);
         }
 
         return $html;

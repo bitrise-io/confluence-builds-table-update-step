@@ -20,13 +20,13 @@ final class TableUpdateCommand extends Command
             ->addArgument('jira_user', InputArgument::REQUIRED, '')
             ->addArgument('jira_password', InputArgument::REQUIRED, '')
             ->addArgument('jira_url', InputArgument::REQUIRED, '')
-            ->addArgument('cells', InputArgument::REQUIRED, 'A list of values separated by line')
+            ->addArgument('content', InputArgument::REQUIRED, '')
             ->addArgument('page_id', InputArgument::REQUIRED, '');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $cells = explode("\n", $input->getArgument('cells'));
+        $contentToAdd = $input->getArgument('content');
 
         $client = new Client(
             $input->getArgument('jira_user'),
@@ -37,9 +37,7 @@ final class TableUpdateCommand extends Command
         $page = $client->getPage($input->getArgument('page_id'));
 
         $builder = new HTMLTableBuilder();
-        $html = $builder->build($page['body']['view']['value'], $cells);
-        $html = str_replace("\n", "", $html);
-        $html = str_replace("<col>", "<col/>", $html);
+        $html = $builder->build($page['body']['view']['value'], $contentToAdd);
 
         $output->writeln("HTML content generated:");
         $output->writeln($html);

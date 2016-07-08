@@ -13,7 +13,7 @@ $inputArg = [
     isset($_SERVER['jira_user']) ? $_SERVER['jira_user'] : null,
     isset($_SERVER['jira_password']) ? $_SERVER['jira_password'] : null,
     isset($_SERVER['jira_url']) ? $_SERVER['jira_url'] : null,
-    isset($_SERVER['cells']) ? $_SERVER['cells'] : null,
+    isset($_SERVER['content']) ? $_SERVER['content'] : null,
     isset($_SERVER['page_id']) ? $_SERVER['page_id'] : null,
 ];
 

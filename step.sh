@@ -29,9 +29,9 @@ if [ -z "${jira_password}" ] ; then
 	exit 1
 fi
 
-if [ -z "${cells}" ] ; then
+if [ -z "${content}" ] ; then
 	write_section_to_formatted_output "# Error"
-	write_section_start_to_formatted_output '* Required input `$cells` not provided!'
+	write_section_start_to_formatted_output '* Required input `$content` not provided!'
 	exit 1
 fi
 

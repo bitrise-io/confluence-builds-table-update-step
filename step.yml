@@ -17,10 +17,10 @@ deps:
   - name: php7.0
 run_if: .IsCI | and (not .IsPR)
 inputs:
-  - cells:
+  - content:
     opts:
-      title: "Cells values"
-      summary: "Values (1 line = 1 column)"
+      title: "Content to add"
+      summary: "Content to add"
       description: ""
       is_expand: true
       is_required: true
