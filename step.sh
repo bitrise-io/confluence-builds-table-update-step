@@ -44,7 +44,7 @@ fi
 # Install dependencies
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir="${THIS_SCRIPTDIR}"
-php "${THIS_SCRIPTDIR}/composer.phar" --working-dir="${THIS_SCRIPTDIR}" --no-dev install
+php "${THIS_SCRIPTDIR}/composer.phar" -q -n --working-dir="${THIS_SCRIPTDIR}" --no-dev install
 
 # Run script
 resp=$(php "${THIS_SCRIPTDIR}/application.php")
