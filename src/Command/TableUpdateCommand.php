@@ -36,6 +36,9 @@ final class TableUpdateCommand extends Command
 
         $page = $client->getPage($input->getArgument('page_id'));
 
+        $output->writeln("Current HTML content is:");
+        $output->writeln($page['body']['view']['value']);
+
         $builder = new HTMLTableBuilder();
         $html = $builder->build($page['body']['view']['value'], $contentToAdd);
 
