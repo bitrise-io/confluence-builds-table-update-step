@@ -39,6 +39,9 @@ final class TableUpdateCommand extends Command
         $output->writeln("Current HTML content is:");
         $output->writeln($page['body']['view']['value']);
 
+        $output->writeln("The content to add is:");
+        $output->writeln($contentToAdd);
+
         $builder = new HTMLTableBuilder();
         $html = $builder->build($page['body']['view']['value'], $contentToAdd);
 
