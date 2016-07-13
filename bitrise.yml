@@ -4,16 +4,16 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 workflows:
   test:
     steps:
-#    - script:
-#        title: PHP Test
-#        inputs:
-#        - content: |-
-#            #!/bin/bash
-#            php vendor/bin/phpunit
-#    - script:
-#        title: Step audit
-#        inputs:
-#        - content: stepman audit --step-yml=./step.yml
+    - script:
+        title: PHP Test
+        inputs:
+        - content: |-
+            #!/bin/bash
+            php vendor/bin/phpunit
+    - script:
+        title: Step audit
+        inputs:
+        - content: stepman audit --step-yml=./step.yml
     - path::./:
         title: Step Test
         run_if: true
