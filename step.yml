@@ -17,13 +17,6 @@ deps:
   - name: php7.0
 run_if: .IsCI | and (not .IsPR)
 inputs:
-  - content:
-    opts:
-      title: "Content to add"
-      summary: "Content to add"
-      description: ""
-      is_expand: true
-      is_required: true
   - jira_user:
     opts:
       title: "JIRA user"
@@ -53,6 +46,14 @@ inputs:
       title: "Page id"
       summary: "Confluence page id"
       description: "Confluence page id"
+      is_expand: true
+      is_required: true
+      value_options: []
+  - attachment:
+    opts:
+      title: "Attachment filename"
+      summary: "Attachment filename"
+      description: "Attachment filename"
       is_expand: true
       is_required: true
       value_options: []

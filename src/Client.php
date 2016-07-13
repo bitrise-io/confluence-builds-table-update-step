@@ -89,4 +89,88 @@ final class Client
             );
         }
     }
+
+    public function getAttachment($pageId, $attachmentName)
+    {
+        $url = $this->jiraURL.'/wiki/rest/api/content/'.$pageId.'/child/attachment?filename='.$attachmentName.'&expand=version,container';
+        $auth = base64_encode($this->jiraUser.':'.$this->jiraPassword);
+        $header = [
+            "Authorization: Basic $auth",
+            'Content-type: application/json',
+        ];
+        $opts = [
+            'http' => [
+                'method' => 'GET',
+                'header' => $header,
+            ],
+        ];
+        $context = stream_context_create($opts);
+        $response = @file_get_contents($url, false, $context);
+
+        if ($http_response_header[0] != 'HTTP/1.1 200 OK') {
+            throw new \Exception(sprintf('Could not get page. HTTP response : "%s"', $http_response_header[0]));
+        }
+
+        return json_decode($response, true);
+    }
+
+    public function downloadAttachmentContent($pageId, $attachmentName)
+    {
+        $url = $this->jiraURL.'/wiki/download/attachments/'.$pageId.'/'.$attachmentName.'?api=v2';
+        $auth = base64_encode($this->jiraUser.':'.$this->jiraPassword);
+        $header = [
+            "Authorization: Basic $auth",
+            'Content-type: application/json',
+        ];
+        $opts = [
+            'http' => [
+                'method' => 'GET',
+                'header' => $header,
+            ],
+        ];
+        $context = stream_context_create($opts);
+        $response = @file_get_contents($url, false, $context);
+
+        if ($http_response_header[0] != 'HTTP/1.1 200 OK') {
+            throw new \Exception(sprintf('Could not get page. HTTP response : "%s"', $http_response_header[0]));
+        }
+
+        return json_decode($response, true);
+    }
+
+    public function uploadAttachment($pageId, $attachmentName, $content, $attachmentId = null)
+    {
+        if ($attachmentId) {
+            $url = $this->jiraURL.'/wiki/rest/api/content/'.$pageId.'/child/attachment/'.$attachmentId.'/data';
+        } else {
+            $url = $this->jiraURL.'/wiki/rest/api/content/'.$pageId.'/child/attachment';
+        }
+
+        $client = new \GuzzleHttp\Client(
+            [
+                // Base URI is used with relative requests
+                'base_uri' => $this->jiraURL,
+                // You can set any number of default request options.
+                'timeout' => 10.0,
+            ]
+        );
+
+        $client->request(
+            'POST',
+            $url,
+            [
+                'auth' => [$this->jiraUser, $this->jiraPassword],
+                'headers' => [
+                    'X-Atlassian-Token' => 'no-check',
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'file',
+                        'filename' => $attachmentName,
+                        'contents' => $content,
+                    ]
+                ],
+            ]
+        );
+    }
 }

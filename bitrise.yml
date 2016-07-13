@@ -4,16 +4,16 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 workflows:
   test:
     steps:
-    - script:
-        title: PHP Test
-        inputs:
-        - content: |-
-            #!/bin/bash
-            php vendor/bin/phpunit
-    - script:
-        title: Step audit
-        inputs:
-        - content: stepman audit --step-yml=./step.yml
+#    - script:
+#        title: PHP Test
+#        inputs:
+#        - content: |-
+#            #!/bin/bash
+#            php vendor/bin/phpunit
+#    - script:
+#        title: Step audit
+#        inputs:
+#        - content: stepman audit --step-yml=./step.yml
     - path::./:
         title: Step Test
         run_if: true
@@ -23,12 +23,7 @@ workflows:
           - jira_user: "$JIRA_USER"
           - jira_password: "$JIRA_PASSWORD"
           - jira_url: "$JIRA_URL"
-          - cells: |-
-              First cell
-              Second cell
-              Third cell
-              Fourth cell
-              Fifth cell
+          - attachment: "$ATTACHMENT"
 
   composer-dep-update:
     steps:

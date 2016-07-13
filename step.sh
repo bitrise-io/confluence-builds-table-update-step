@@ -29,9 +29,9 @@ if [ -z "${jira_password}" ] ; then
 	exit 1
 fi
 
-if [ -z "${content}" ] ; then
+if [ -z "${attachment}" ] ; then
 	write_section_to_formatted_output "# Error"
-	write_section_start_to_formatted_output '* Required input `$content` not provided!'
+	write_section_start_to_formatted_output '* Required input `$attachment` not provided!'
 	exit 1
 fi
 
@@ -42,9 +42,11 @@ if [ -z "${jira_url}" ] ; then
 fi
 
 # Install dependencies
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --install-dir="${THIS_SCRIPTDIR}"
-php "${THIS_SCRIPTDIR}/composer.phar" -q -n --working-dir="${THIS_SCRIPTDIR}" --no-dev install
+if [ -d "THIS_SCRIPTDIR/vendor" ]; then
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php --install-dir="${THIS_SCRIPTDIR}"
+    php "${THIS_SCRIPTDIR}/composer.phar" -q -n --working-dir="${THIS_SCRIPTDIR}" --no-dev install
+fi
 
 # Run script
 resp=$(php "${THIS_SCRIPTDIR}/application.php")
