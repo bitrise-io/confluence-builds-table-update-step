@@ -23,7 +23,9 @@ workflows:
           - jira_user: "$JIRA_USER"
           - jira_password: "$JIRA_PASSWORD"
           - jira_url: "$JIRA_URL"
-          - attachment: "$ATTACHMENT"
+          - attachment_filename: "$ATTACHMENT_FILENAME"
+          - content: |-
+              application: Test app
 
   composer-dep-update:
     steps:
