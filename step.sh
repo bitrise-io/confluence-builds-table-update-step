@@ -42,7 +42,7 @@ if [ -z "${jira_url}" ] ; then
 fi
 
 # Install dependencies
-if [ -d "THIS_SCRIPTDIR/vendor" ]; then
+if ! [ -d "${THIS_SCRIPTDIR}/vendor" ]; then
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     php composer-setup.php --install-dir="${THIS_SCRIPTDIR}"
     php "${THIS_SCRIPTDIR}/composer.phar" -q -n --working-dir="${THIS_SCRIPTDIR}" --no-dev install
