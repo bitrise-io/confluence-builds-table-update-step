@@ -21,11 +21,11 @@ final class ContentParser
                     '@\$([\w]+)@',
                     function ($matches) use ($variables) {
                         $variableName = $matches[1];
-                        if (isset($variables[$variableName])) {
-                            return $variables[$variableName];
+                        if (!isset($variables[$variableName])) {
+                            throw new \Exception(sprintf('Variable "%s" not found', $variableName));
                         }
 
-                        return '$'.$variableName;
+                        return $variables[$variableName];
                     },
                     $configValue
                 );
