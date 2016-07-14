@@ -14,8 +14,8 @@ final class ContentParser
         foreach ($lines as $line) {
             $groups = [];
             if (preg_match('@([\w]+):(.+)@', $line, $groups)) {
-                $configName = $groups[1];
-                $configValue = $groups[2];
+                $configName = trim($groups[1]);
+                $configValue = trim($groups[2]);
 
                 $configValue = preg_replace_callback(
                     '@\$([\w]+)@',
